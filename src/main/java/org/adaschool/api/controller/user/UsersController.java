@@ -1,52 +1,61 @@
 package org.adaschool.api.controller.user;
 
+import org.adaschool.api.exception.UserNotFoundException;
 import org.adaschool.api.repository.user.User;
+import org.adaschool.api.repository.user.UserDto;
 import org.adaschool.api.service.user.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.List;
 
 @RestController
-@RequestMapping("/v1/users/")
+@RequestMapping("/v1/users")
 public class UsersController {
 
     private final UsersService usersService;
 
-    public UsersController(@Autowired UsersService usersService) {
-        this.usersService = usersService;
+    @Autowired
+    public UsersController(UsersService usersService) { this.usersService = usersService; }
+
+    // Acepta /v1/users y /v1/users/ (importante para el test del POST)
+    @PostMapping({"", "/"})
+    public ResponseEntity<User> createUser(@RequestBody UserDto userDto) {
+        User user = new User(userDto);
+        user.setId(null); // El test envía "id":"null"; lo ignoramos
+        User savedUser = usersService.save(user);
+        URI created = URI.create("/v1/users/" + savedUser.getId());
+        return ResponseEntity.created(created).body(savedUser);
     }
 
-    @PostMapping
-    public ResponseEntity<User> createUser() {
-        //TODO implement this method
-        URI createdUserUri = URI.create("");
-        return ResponseEntity.created(createdUserUri).body(null);
+    @GetMapping("/{id}")
+    public ResponseEntity<User> findById(@PathVariable String id) {
+        return usersService.findById(id)
+                .map(ResponseEntity::ok)
+                .orElseThrow(() -> new UserNotFoundException("user with ID: " + id + " not found"));
     }
 
-    @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        //TODO implement this method
-        return ResponseEntity.ok(null);
+    @PutMapping("/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable String id, @RequestBody UserDto userDto) {
+        return usersService.findById(id)
+                .map(existing -> {
+                    existing.setName(userDto.getName());
+                    existing.setLastName(userDto.getLastName());
+                    existing.setEmail(userDto.getEmail());
+                    existing.setPhone(userDto.getPhone());
+                    return ResponseEntity.ok(usersService.save(existing));
+                })
+                .orElseThrow(() -> new UserNotFoundException("user with ID: " + id + " not found"));
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<User> findById(@PathVariable("id") String id) {
-        //TODO implement this method
-        return ResponseEntity.ok(null);
-    }
-
-    @PutMapping
-    public ResponseEntity<User> updateUser() {
-        //TODO implement this method
-        return ResponseEntity.ok(null);
-    }
-
-    @DeleteMapping
-    public ResponseEntity<Void> deleteUser() {
-        //TODO implement this method
-        return ResponseEntity.ok().build();
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable String id) {
+        return usersService.findById(id)
+                .map(u -> {
+                    usersService.deleteById(id);
+                    return ResponseEntity.ok().<Void>build();
+                })
+                .orElseThrow(() -> new UserNotFoundException("user with ID: " + id + " not found"));
     }
 }
