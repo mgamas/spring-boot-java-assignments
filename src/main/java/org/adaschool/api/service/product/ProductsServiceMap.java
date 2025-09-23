@@ -6,10 +6,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import org.springframework.stereotype.Service;
 
-public class ProductsServiceMap implements ProductsService {
+    @Service
+    public class ProductsServiceMap implements ProductsService {
 
-    private final Map<String, Product> store = new HashMap<>();
+        private final Map<String, Product> store = new HashMap<>();
 
     @Override
     public Product save(Product product) {
