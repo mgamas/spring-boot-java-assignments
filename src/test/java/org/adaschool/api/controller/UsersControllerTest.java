@@ -4,7 +4,7 @@ import org.adaschool.api.controller.user.UsersController;
 import org.adaschool.api.exception.UserNotFoundException;
 import org.adaschool.api.repository.user.User;
 import org.adaschool.api.repository.user.UserDto;
-import org.adaschool.api.service.user.UsersService;
+import org.adaschool.api.service.UsersService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

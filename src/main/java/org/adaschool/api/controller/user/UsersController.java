@@ -3,7 +3,7 @@ package org.adaschool.api.controller.user;
 import org.adaschool.api.exception.UserNotFoundException;
 import org.adaschool.api.repository.user.User;
 import org.adaschool.api.repository.user.UserDto;
-import org.adaschool.api.service.user.UsersService;
+import org.adaschool.api.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

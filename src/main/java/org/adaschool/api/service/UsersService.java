@@ -1,4 +1,4 @@
-package org.adaschool.api.service.user;
+package org.adaschool.api.service;
 
 import org.adaschool.api.repository.user.User;
 
