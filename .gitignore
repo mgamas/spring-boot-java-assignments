@@ -1,16 +1,17 @@
-# Compiled class file
+############################################
+# Java / Gradle / IDE .gitignore (completo)
+############################################
+
+# === Compilados y temporales ===
 *.class
-
-# Log file
 *.log
-
-# BlueJ files
 *.ctxt
+*.tmp
+*.swp
+*.swo
+*.orig
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
+# Archivos de paquetes (no subas builds locales)
 *.jar
 *.war
 *.nar
@@ -19,11 +20,31 @@
 *.tar.gz
 *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+# EXCEPCIÓN NECESARIA: Gradle Wrapper JAR
+# (si NO haces esta excepción, Railway falla con:
+# "Could not find or load main class org.gradle.wrapper.GradleWrapperMain")
+!gradle/wrapper/gradle-wrapper.jar
 
-# IntelliJ IDEA
-.idea/
-.gradle/
-.build/
-/build
+# === Gradle ===
+/.gradle/          # caché (sí ignóralo)
+/build/            # salida de build (sí ignóralo)
+/out/              # salida de algunos IDEs
+/target/           # salida tipo Maven
+
+# NO ignores la carpeta gradle/wrapper ni los scripts gradlew
+# gradlew y gradlew.bat deben subirse
+
+# === IntelliJ IDEA ===
+/.idea/
+/*.iml
+
+# === VS Code ===
+/.vscode/
+
+# === SO y varios ===
+.DS_Store
+Thumbs.db
+
+# === Entornos ===
+.env
+.env.*
