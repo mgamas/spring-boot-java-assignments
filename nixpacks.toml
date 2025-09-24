@@ -1,0 +1,5 @@
+[phases.build]
+cmds = ["./gradlew clean bootJar -x test"]
+
+[start]
+cmd = "java $JAVA_OPTS -jar $(ls build/libs/*-SNAPSHOT*.jar build/libs/*.jar 2>/dev/null | head -n1) --server.port=${PORT}"
