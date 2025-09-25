@@ -7,11 +7,11 @@ plugins {
 group = 'org.adaschool'
 version = '0.0.1-SNAPSHOT'
 
-java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
-	}
-}
+//java {
+//	toolchain {
+//		languageVersion = JavaLanguageVersion.of(17)
+//	}
+//}
 
 repositories {
 	mavenCentral()
@@ -37,3 +37,6 @@ task adaSubmit(type: Exec) {
 		commandLine './ada-client', 'submit'
 	}
 }
+
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
